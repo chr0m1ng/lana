@@ -1,0 +1,71 @@
+{
+  "swagger": "2.0",
+  "basePath": "/api/v1",
+  "info": {
+    "version": "0.0.1",
+    "title": "Lana API",
+    "description": "Lana API"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/messages": {
+      "post": {
+        "summary": "Send a message to Lana",
+        "tags": [
+          "Messages"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "value": {
+              "from": "user@channel",
+              "type": "text/plain",
+              "content": "message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/notifications": {
+      "post": {
+        "summary": "Send a notification to Lana",
+        "tags": [
+          "Notifications"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "value": {
+              "to": "user@channel",
+              "type": "text/plain",
+              "content": "message"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    }
+  }
+}
