@@ -65,3 +65,6 @@ typings/
 
 # packages
 *package-lock.json
+
+# swagger
+swagger.json
