@@ -1,6 +1,5 @@
 const router = require('express').Router();
 
-
 /**
  * @api [post] /notifications
  * summary: Send a notification to Lana

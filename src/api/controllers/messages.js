@@ -1,6 +1,5 @@
 const router = require('express').Router();
 
-
 /**
  * @api [post] /messages
  * summary: Send a message to Lana

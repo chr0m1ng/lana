@@ -15,11 +15,7 @@ const api = async () => {
 
         // Starting swagger
         const swagger_document = require('./helpers/swagger.json');
-        app.use(
-            '/api/v1/docs',
-            swagger_ui.serve,
-            swagger_ui.setup(swagger_document)
-        );
+        app.use('/api/v1/docs', swagger_ui.serve, swagger_ui.setup(swagger_document));
 
         // Adding middlewares
         app.use(body_parser.json());

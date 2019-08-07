@@ -1,13 +1,10 @@
 {
-  "swagger": "2.0",
-  "basePath": "/api/v1",
-  "info": {
-    "version": "0.0.1",
-    "title": "Lana API",
-    "description": "Lana API"
-  },
-  "schemes": [
-    "http",
-    "https"
-  ]
+    "swagger": "2.0",
+    "basePath": "/api/v1",
+    "info": {
+        "version": "0.0.1",
+        "title": "Lana API",
+        "description": "Lana API"
+    },
+    "schemes": ["http", "https"]
 }
