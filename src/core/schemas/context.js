@@ -1,8 +1,15 @@
-const context_model = {
-    identity: String,
-    is_holding: Boolean,
-    holding_by: String,
-    variables: Object
-};
+const mongoose = require('mongoose');
+const model_name = 'Context';
 
-module.exports = context;
+const context_schema = new mongoose.Schema(
+    {
+        is_holding: { type: Boolean, required: true },
+        holding_by: { type: String, required: false },
+        variables: { type: Object }
+    },
+    {
+        timestamps: true
+    }
+);
+
+module.exports = mongoose.model(model_name, context_schema);

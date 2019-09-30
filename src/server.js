@@ -1,6 +1,6 @@
 const api = require('./api');
 
-(async () => {
+(async _ => {
     try {
         await api();
     } catch (err) {

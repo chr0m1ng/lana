@@ -5,7 +5,7 @@ const swagger_inline = require('swagger-inline');
 const auth_middleware = require('./middlewares/auth');
 const app = express();
 
-const api = async () => {
+const api = async _ => {
     try {
         // Creating swagger docs
         await swagger_inline(['./src/api/controllers/*.js'], {
@@ -15,7 +15,11 @@ const api = async () => {
 
         // Starting swagger
         const swagger_document = require('./helpers/swagger.json');
-        app.use('/api/v1/docs', swagger_ui.serve, swagger_ui.setup(swagger_document));
+        app.use(
+            '/api/v1/docs',
+            swagger_ui.serve,
+            swagger_ui.setup(swagger_document)
+        );
 
         // Adding middlewares
         app.use(body_parser.json());
@@ -28,7 +32,7 @@ const api = async () => {
 
         // Setting server configuration
         const PORT = process.env.PORT || 3000;
-        app.listen(PORT, () => {
+        app.listen(PORT, _ => {
             console.info(`Server running on ${PORT} port.`);
         });
     } catch (err) {
