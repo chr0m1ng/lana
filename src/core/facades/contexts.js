@@ -7,7 +7,7 @@ const createAsync = async (
     id = new Types.ObjectId(),
     variables = {},
     is_holding = false,
-    holding_by = ''
+    holding_by = null
 ) => {
     const doc = await context.create({
         _id: id,
@@ -24,7 +24,7 @@ const findByIdAsync = async (id) => {
 
 const getVariablesAsync = async (id) => {
     const context_doc = await findByIdAsync(id);
-    return context_doc.variables;
+    return context_doc ? context_doc.variables : {};
 };
 
 const getVariableAsync = async (id, name) => {
@@ -33,7 +33,10 @@ const getVariableAsync = async (id, name) => {
 };
 
 const setVariableAsync = async (id, name, value) => {
-    const context_doc = await findByIdAsync(id);
+    let context_doc = await findByIdAsync(id);
+    if (!context_doc) {
+        context_doc = await createAsync(id);
+    }
     context_doc.variables = context_doc.variables || {};
     context_doc.variables[name] = value;
     context_doc.markModified(VARIABLES_KEY);
@@ -49,14 +52,22 @@ const deleteVariableAsync = async (id, name) => {
 };
 
 const holdAsync = async (id, holding_by) => {
-    const context_doc = await findByIdAsync(id);
-    context_doc.is_holding = true;
-    context_doc.holding_by = holding_by;
-    return context_doc.save();
+    let context_doc = await findByIdAsync(id);
+    if (!context_doc) {
+        context_doc = await createAsync(id, {}, true, holding_by);
+    } else {
+        context_doc.is_holding = true;
+        context_doc.holding_by = holding_by;
+        context_doc = await context_doc.save();
+    }
+    return context_doc;
 };
 
 const releaseAsync = async (id) => {
     const context_doc = await findByIdAsync(id);
+    if (!context_doc) {
+        return null;
+    }
     context_doc.is_holding = false;
     context_doc.holding_by = null;
     return context_doc.save();

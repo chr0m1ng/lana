@@ -4,22 +4,6 @@ const context_service = require('./contexts');
 
 const EXTRAS_KEY = 'extras';
 
-const createAsync = async (
-    id = new Types.ObjectId(),
-    name = id,
-    extras = {},
-    context_id = null
-) => {
-    const c_id = context_id || (await context_service.createAsync(id));
-    const doc = await contact.createAsync({
-        _id: id,
-        name,
-        extras,
-        context: new Types.ObjectId(c_id)
-    });
-    return doc.id;
-};
-
 const findByIdAsync = async (id, with_context = false) => {
     let contact_doc;
     if (with_context) {
@@ -33,8 +17,31 @@ const findByIdAsync = async (id, with_context = false) => {
     return contact_doc;
 };
 
+const createAsync = async (
+    id = new Types.ObjectId(),
+    name = id,
+    extras = {},
+    context_id = null
+) => {
+    const found_contact = await findByIdAsync(id);
+    if (found_contact) {
+        return found_contact;
+    }
+    const c_id = context_id || (await context_service.createAsync(id));
+    const doc = await contact.createAsync({
+        _id: id,
+        name,
+        extras,
+        context: new Types.ObjectId(c_id)
+    });
+    return doc.id;
+};
+
 const setExtraAsync = async (id, name, value) => {
-    const contact_doc = await findByIdAsync(id);
+    let contact_doc = await findByIdAsync(id);
+    if (!contact_doc) {
+        contact_doc = await createAsync(id);
+    }
     contact_doc.extras = contact_doc.extras || {};
     contact_doc.extras[name] = value;
     contact_doc.markModified(EXTRAS_KEY);
@@ -44,12 +51,12 @@ const setExtraAsync = async (id, name, value) => {
 
 const getExtrasAsync = async (id) => {
     const contact_doc = await findByIdAsync(id);
-    return contact_doc.extras;
+    return contact_doc ? contact_doc.extras || {} : {};
 };
 
 const getExtraAsync = async (id, name) => {
-    const contact_doc = await findByIdAsync(id);
-    return contact_doc.extras[name];
+    const extras = await getExtrasAsync(id);
+    return extras[name];
 };
 
 const deleteExtraAsync = async (id, name) => {
@@ -59,18 +66,23 @@ const deleteExtraAsync = async (id, name) => {
     return contact_doc.save();
 };
 
-const getContextVariableAsync = async (id, name) => {
-    const contact_doc = await findByIdAsync(id);
-    return context_service.getVariableAsync(contact_doc.context, name);
-};
-
 const getContextVariablesAsync = async (id) => {
     const contact_doc = await findByIdAsync(id);
-    return context_service.getVariablesAsync(contact_doc.context);
+    return contact_doc
+        ? context_service.getVariablesAsync(contact_doc.context)
+        : {};
+};
+
+const getContextVariableAsync = async (id, name) => {
+    const context_variables = await getContextVariablesAsync(id);
+    return context_variables[name];
 };
 
 const setContextVariableAsync = async (id, name, value) => {
-    const contact_doc = await findByIdAsync(id);
+    let contact_doc = await findByIdAsync(id);
+    if (!contact_doc) {
+        contact_doc = await createAsync(id);
+    }
     return context_service.setVariableAsync(contact_doc.context, name, value);
 };
 
