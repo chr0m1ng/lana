@@ -1,9 +1,7 @@
-const api = require('./api');
+const Api = require('./api');
 
-(async _ => {
-    try {
-        await api();
-    } catch (err) {
-        console.error(err);
-    }
+(async () => {
+    const api = new Api();
+    await api.buildAsync();
+    api.start();
 })();

@@ -1,0 +1,12 @@
+{
+    "api": {
+        "base_path": "/api/v1",
+        "swagger_path": "/"
+    },
+    "db": {
+        "url": "mongodb://ds151753.mlab.com:51753",
+        "db_name": "lana-hmg",
+        "user": "<user>",
+        "pass": "<pass>"
+    }
+}

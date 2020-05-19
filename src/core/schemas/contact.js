@@ -1,15 +1,17 @@
-const mongoose = require('mongoose');
-const model_name = 'Contact';
+const { Schema, SchemaTypes, model } = require('mongoose');
 
-const contact_schema = new mongoose.Schema(
+const MODEL_NAME = 'Contact';
+const CONTEXT_NAME = 'Context';
+
+const contact_schema = new Schema(
     {
         name: { type: String },
         extras: { type: Object },
-        context: { type: mongoose.SchemaTypes.ObjectId, ref: 'Context' }
+        context: { type: SchemaTypes.ObjectId, ref: CONTEXT_NAME }
     },
     {
         timestamps: true
     }
 );
 
-module.exports = mongoose.model(model_name, contact_schema);
+module.exports = model(MODEL_NAME, contact_schema);

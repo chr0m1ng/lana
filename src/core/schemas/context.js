@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
-const model_name = 'Context';
+const { Schema, model } = require('mongoose');
 
-const context_schema = new mongoose.Schema(
+const MODEL_NAME = 'Context';
+
+const context_schema = new Schema(
     {
         is_holding: { type: Boolean, required: true },
         holding_by: { type: String, required: false },
@@ -12,4 +13,4 @@ const context_schema = new mongoose.Schema(
     }
 );
 
-module.exports = mongoose.model(model_name, context_schema);
+module.exports = model(MODEL_NAME, context_schema);
