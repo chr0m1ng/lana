@@ -1,4 +1,5 @@
-const context = require('./context');
-const contact = require('./contact');
+const context = require('./context-schema');
+const contact = require('./contact-schema');
+const skill = require('./skill-schema');
 
-module.exports = { context, contact };
+module.exports = { context, contact, skill };

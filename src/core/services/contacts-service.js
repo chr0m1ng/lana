@@ -1,6 +1,6 @@
 const { Types } = require('mongoose');
 const { contact, context } = require('../schemas');
-const context_service = require('./contexts');
+const context_service = require('./contexts-service');
 
 const EXTRAS_KEY = 'extras';
 
