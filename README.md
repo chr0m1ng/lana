@@ -1,44 +1,15 @@
 # Lana
 
-Lana is a Personal Assistant.
-
----
-
-Persona description [here](PERSONA.md).
-
-[![License][license-badge]][license-url]
+[![License: MIT][license-badge]][license-url]
 
 > Lana is a Personal Assistant
 
-Long description.
+## Description
 
-## Usage
+- [Persona description][persona]
 
-Just install the dependencies:
+<!-- links -->
 
-```bash
-$ npm install
-```
-
-Then:
-
-```bash
-$ npm start
-```
-
-| Action                                   | Usage               |
-|------------------------------------------|---------------------|
-| Starting development mode                | `npm start`         |
-| Linting code                             | `npm run lint`      |
-| Running unit tests                       | `npm run jest`      |
-| Running lint + tests                     | `npm test`          |
-| Running code coverage                    | `npm run coverage`  |
-| Sending coverage results to Coveralls.io | `npm run coveralls` |
-
-## Author
-
-Gabriel Santos
-
-## License
-
+[persona]: /PERSONA.md
+[license-badge]: https://img.shields.io/badge/License-MIT-yellow.svg
 [license-url]: https://opensource.org/licenses/MIT
